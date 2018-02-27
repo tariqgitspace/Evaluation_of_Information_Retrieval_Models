@@ -1,0 +1,13 @@
+cd /home/ubuntu/auntomation/DFR
+rm DFR.txt
+cd /home/ubuntu/solr-6.2.0
+bin/solr restart -s demo/solr
+sleep 10
+bin/post -p 8983 -c DFR ../train.json
+sleep 10
+cd /home/ubuntu/auntomation/DFR
+python3 json_to_trec_DFR.py
+cd /home/ubuntu/trec_eval.9.0
+sleep 2
+./trec_eval -q -c -M1000 ../auntomation/DFR/qrel.txt ../auntomation/DFR/DFR.txt >> /home/ubuntu/auntomation/DFR/DFR_Combinations.txt
+

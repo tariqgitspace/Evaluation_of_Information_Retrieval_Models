@@ -1,0 +1,12 @@
+cd /home/ubuntu/auntomation/BM25
+rm BM25.txt 
+cd /home/ubuntu/solr-6.2.0
+bin/solr restart -s demo/solr
+sleep 7
+bin/post -p 8983 -c BM25 ../train.json
+sleep 5
+cd /home/ubuntu/auntomation/BM25
+python3 json_to_trec_BM25.py
+cd /home/ubuntu/trec_eval.9.0
+#sleep 2
+./trec_eval -q -c -M1000 ../auntomation/BM25/qrel.txt ../auntomation/BM25/BM25.txt >> /home/ubuntu/auntomation/BM25/BM25_Combinations.txt
